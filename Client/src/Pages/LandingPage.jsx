@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { APP_FEATURES } from "../utils/data";
 import { Brain } from 'lucide-react';
 import Modal from '../components/Modal';
 import Login from './Auth/Login';
 import Signup from './Auth/Signup'
+import { UserContext } from '../context/UserContext';
+import ProfileInfoCard from '../components/Cards/ProfileInfoCard';
 
 // Importing specific icons from lucide-react
 import { Sparkles, Target, Wind, PenSquare, MessageSquareHeart, Presentation } from 'lucide-react';
@@ -19,12 +21,18 @@ const iconMap = {
 };
 
 const LandingPage = () => {
+  const {user}  = useContext(UserContext);
   const navigate = useNavigate();
   const [openAuthModel, setOpenAuthModel] = useState(false);
   const [currentPage, setCurrentPage] = useState("login");
 
   const handleCTA = () => {
-    console.log("Get Started button clicked!");
+    if(!user){
+      setOpenAuthModel(true);
+    }
+    else{
+      navigate("/dashboard");
+    }
   };
 
   return (
@@ -42,9 +50,11 @@ const LandingPage = () => {
           {/* Header */}
           <header className='flex justify-between items-center mb-20'>
             <div className='text-3xl text-black font-bold tracking-tight'><Brain />ProPrep AI</div>
-            <button className='bg-gradient-to-r from-amber-500 to-orange-500 text-sm font-semibold text-white px-7 py-2.5 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300' onClick={()=>setOpenAuthModel(true)}>
+           
+            {user ?
+             (<ProfileInfoCard/> ) : (<button className='bg-gradient-to-r from-amber-500 to-orange-500 text-sm font-semibold text-white px-7 py-2.5 rounded-full shadow-md hover:shadow-lg hover:scale-105 transition-all duration-300' onClick={()=>setOpenAuthModel(true)}>
               Login / Sign Up
-            </button>
+            </button>)}
           </header>
 
           {/* Centered Hero Section */}

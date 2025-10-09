@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 // Assuming these are the correct paths in your project
 import { validateEmail } from '../../utils/helper';
 import Input from '../../components/Inputs/Input';
-
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPath';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 
 const Login = ({ setCurrentPage }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    const {updateUser} = useContext(UserContext);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -28,7 +34,30 @@ const Login = ({ setCurrentPage }) => {
         // Add your login logic here
         console.log("Logging in with:", email);
 
-        // login API call => try & catch block . 
+
+        // login API call .
+        try{
+            const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN , {
+                email , 
+                password,
+            });
+            
+            const {token} = response.data;
+
+            if(token){
+                localStorage.setItem("token" , token);
+                updateUser(response.data);
+                navigate("/dashboard");
+            }
+        }
+        catch(error){
+            if(error.response && error.response.data.message){
+                setError(error.response.data.message);
+            }
+            else{
+                setError("Something went wrong , please try again !");
+            }
+        }
     };
 
     return (
