@@ -1,28 +1,19 @@
-## PROPREP-AI
+# PROPREP-AI
 An intelligent, AI-powered platform designed for comprehensive interview preparation and session management. This application provides users with the tools to generate, manage, and track interview practice sessions with precision.
 
-Table of Contents
-About The Project
+## Table of Contents
+- About The Project
+- Technology Stack
+- Project Structure
+- Getting Started
+- Prerequisites
+- Server Installation
+- Client Installation
+- Core Features
+- API Testing Guide
+- Troubleshooting
 
-Technology Stack
-
-Project Structure
-
-Getting Started
-
-Prerequisites
-
-Server Installation
-
-Client Installation
-
-Core Features
-
-API Testing Guide
-
-Troubleshooting
-
-About The Project
+## About The Project
 PROPREP-AI is a full-stack web application engineered to assist users in their interview preparation process by providing AI-generated questions and a robust session management system.
 
 The application is built on the MERN stack (MongoDB, Express.js, React, Node.js) and integrates with the Google Gemini API to deliver the following core functionalities:
@@ -36,7 +27,7 @@ Tools for tracking performance and recording notes within each session.
 ## Technology Stack
 The project is built using a modern technology stack for both the frontend and backend.
 
-# Frontend
+## Frontend
 React: A component-based JavaScript library for building user interfaces.
 React Router DOM: A library for declarative, client-side routing.
 Tailwind CSS: A utility-first CSS framework for rapid and custom UI development.
@@ -45,7 +36,7 @@ Framer Motion: A production-ready library for creating fluid animations.
 Lucide React: A lightweight and performant icon toolkit.
 React Syntax Highlighter: A component for styling code blocks with syntax highlighting.
 
-# Backend
+## Backend
 - Node.js: A JavaScript runtime environment for executing server-side code.
 - Express.js: A minimal and flexible web application framework for Node.js.
 - MongoDB: A NoSQL document database for data storage.
@@ -78,10 +69,10 @@ Server Directory
 ├── db.js
 └── server.js
 
-# Getting Started
+## Getting Started
 - Follow these instructions to set up and run the project on your local machine.
 
-# Prerequisites
+## Prerequisites
 Ensure you have the following software installed:
 
 Node.js (LTS version recommended, preferably managed via nvm)
