@@ -1,92 +1,159 @@
-## ----------PROPREP-AI ---------- ##
+## PROPREP-AI
+An intelligent, AI-powered platform designed for comprehensive interview preparation and session management. This application provides users with the tools to generate, manage, and track interview practice sessions with precision.
 
-## Client - 
-( path / folder setup ) . 
-- src
-  - assets
-        |- hero-img
-  - components
-        | - Cards
-        | - Inputs
-               | - input.jsx
-               | - ProfilePhotoSelector.jsx
-        |- Layouts
-        |- Loaders
-        |- modal.jsx
-  - Context
-        |- UserContext.jsx
-  - Pages
-        |- Auth
-            |- Login.jsx
-            |- Signup.jsx
-        |- Home
-            |- dashBoard.jsx
-        |- interviewprep
-            |- components
-            |- interviewprep.jsx
-        |- Landingpage.jsx
-  - Utils
-        |- apipath.js
-        |- axiosinstance.js
-        |- data.js
-        |- helper.js
-        |- uploadimage.js
-  - app.jsx
-  - index.css
-  - main.jsx
+Table of Contents
+About The Project
 
-  - Libraries used : 
-    npm i react / react-router-dom / axios / luicide-react / framer-motion / tailwind css / react-syntax-highlighter .
+Technology Stack
 
-- Process :  
------------------------------------------------------------------------------------------------------------
-## Server 
-- nvm use node (to tell nvm to use the latest version of node ).
-- npm init -y (get package.json with all other default values ).
-- npm i express bcryptjs cors dotenv jsonwebtoken mongoose multer @google/genai . 
-- npm i nodemon --save-dev
-- node -e "console.log(require('crypto').randomBytes(64).toString('hex'))" (used to create JWT_SECRET KEY ) . 
+Project Structure
 
-# project structure setup -
+Getting Started
 
-# implementation -
-- built Schema for user , question , session . 
-- build mongo connection with connection string in db.js .
-- stored the credential of connection string .env .
-- setup mongodb
-      mongodb site -> sign in -> create new project -> create cluster -> copied connection string and pasted in .env file .
-- created routes in server/js . 
-- implemented routes in there specific files . (Routes/) .
-- created a new register user , login user , get profile in the AuthController.js . 
-- created a JWT_TOKEN n stored it in .env file . 
-- created authMiddleware protect . 
-- completed the register/login/profile sections . 
-- tested with the postman . 
+Prerequisites
 
-- fixed the issue abt jwt_token ,
-   how to automate the postman to fetch the token itself from the local ? 
-   Login -> scripts -> post-response -> then paste this js code (pm.collectionVariables.set("accessToken", pm.response.json().token);) . 
-   then to authorization of GET method , select auth type as - Bearer token then token as {{accessToken}} . 
+Server Installation
 
-- created the uploadMiddleware & upload-image auth . (from postman u can add the image into the db/uploads) .
+Client Installation
 
-- created createSession, getMySessions, getSessionById, deleteSession .
+Core Features
 
-## Note : 
-- Problem: "Not authorized, no token" error.
-- Reason: Your API route is protected. It needs a JWT token to work, but you didn't send one.
-- Fix:
-      Run your Login request to get a token , In the failing request, go to Authorization -> Bearer Token and set the token to {{accessToken}}.
+API Testing Guide
 
-- created addQuestionToSession , updateQuestionNote , togglePinQuestion .
+Troubleshooting
 
-- created aiRoutes - > generateInterviewQuestion , generateQuestionExplanation . 
-- prompt.js -> to provide llm the prompt of how he shld generate . 
-- generated api from gemini ai studio - gemini 2.0 flash lite .
+About The Project
+PROPREP-AI is a full-stack web application engineered to assist users in their interview preparation process by providing AI-generated questions and a robust session management system.
 
------------------------------------------completed server side view -------------------------------------------
+The application is built on the MERN stack (MongoDB, Express.js, React, Node.js) and integrates with the Google Gemini API to deliver the following core functionalities:
 
-## Client - 
-- create api paths in apiPath.js , axiosInstance . 
-- endpoint connection for login and signup . 
-- building dashboard page . 
+Generation of tailored interview questions based on user inputs.
+
+Creation and management of distinct interview practice sessions.
+
+Tools for tracking performance and recording notes within each session.
+
+## Technology Stack
+The project is built using a modern technology stack for both the frontend and backend.
+
+# Frontend
+React: A component-based JavaScript library for building user interfaces.
+React Router DOM: A library for declarative, client-side routing.
+Tailwind CSS: A utility-first CSS framework for rapid and custom UI development.
+Axios: A promise-based HTTP client for making API requests.
+Framer Motion: A production-ready library for creating fluid animations.
+Lucide React: A lightweight and performant icon toolkit.
+React Syntax Highlighter: A component for styling code blocks with syntax highlighting.
+
+# Backend
+- Node.js: A JavaScript runtime environment for executing server-side code.
+- Express.js: A minimal and flexible web application framework for Node.js.
+- MongoDB: A NoSQL document database for data storage.
+- Mongoose: An Object Data Modeling (ODM) library for MongoDB and Node.js.
+- JSON Web Token (JWT): A standard for creating access tokens for secure authentication.
+- Bcrypt.js: A library for hashing user passwords.
+- Google Generative AI SDK: The official SDK for interacting with the Gemini AI model.
+- Multer: A middleware for handling multipart/form-data, used for file uploads.
+- Dotenv: A module for loading environment variables from a .env file.
+
+## Project Structure
+The repository is organized into a standard client-server architecture.
+Client Directory
+/client
+└── src
+    ├── assets/
+    ├── components/
+    ├── Context/
+    ├── Pages/
+    ├── Utils/
+    ├── App.jsx
+    └── main.jsx
+Server Directory
+/server
+├── controllers/
+├── middleware/
+├── models/
+├── routes/
+├── uploads/
+├── db.js
+└── server.js
+
+# Getting Started
+- Follow these instructions to set up and run the project on your local machine.
+
+# Prerequisites
+Ensure you have the following software installed:
+
+Node.js (LTS version recommended, preferably managed via nvm)
+
+npm (Node Package Manager)
+
+MongoDB (a local instance or a cloud-based service like MongoDB Atlas)
+
+Server Installation
+Clone the repository:
+
+Bash
+
+git clone https://github.com/your-username/proprep-ai.git
+Navigate to the server directory:
+
+Bash
+
+cd proprep-ai/server
+Install dependencies:
+
+Bash
+
+npm install
+Configure environment variables: Create a .env file in the /server root and add the following required variables:
+
+Code snippet
+
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_generated_jwt_secret
+GEMINI_API_KEY=your_google_gemini_api_key
+PORT=5000
+Start the server:
+
+Bash
+
+npm run dev
+Client Installation
+Navigate to the client directory:
+
+Bash
+
+cd ../client
+Install dependencies:
+
+Bash
+
+npm install
+Start the client application:
+
+Bash
+
+npm run dev
+Core Features
+User Authentication: Secure user registration and login functionality implemented with JWT for stateless authentication.
+
+AI Question Generation: Dynamic generation of interview questions using the Google Gemini API, tailored to user-specified criteria.
+
+Session Management: Full CRUD (Create, Read, Update, Delete) capabilities for managing interview practice sessions.
+
+Interactive Q&A Interface: Users can add generated questions to sessions, pin important items, and append personal notes for review.
+
+Profile Management: Functionality for users to view and update their profile information, including a profile photo upload feature.
+
+API Testing Guide
+For testing protected API endpoints, a valid JWT must be included in the request header. The following script can be used in Postman to automate this process:
+
+After a successful login request, navigate to the Tests tab.
+
+Add the following script to automatically store the authentication token as a collection variable:
+
+JavaScript
+
+pm.collectionVariables.set("accessToken", pm.response.json().token);
+For subsequent requests to protected routes, set the authorization type to Bearer Token and use {{accessToken}} as the token value.
