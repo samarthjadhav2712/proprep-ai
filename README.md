@@ -1,150 +1,137 @@
-# PROPREP-AI
-An intelligent, AI-powered platform designed for comprehensive interview preparation and session management. This application provides users with the tools to generate, manage, and track interview practice sessions with precision.
+# ProPrep-AI
 
-## Table of Contents
-- About The Project
-- Technology Stack
-- Project Structure
-- Getting Started
-- Prerequisites
-- Server Installation
-- Client Installation
-- Core Features
-- API Testing Guide
-- Troubleshooting
+ProPrep-AI is a full-stack interview preparation platform that uses generative AI to produce role-specific interview questions and beginner-friendly answers, and provides session management for users to organize, pin, and add notes to questions. The backend uses Node.js + Express + MongoDB, and the frontend is a React + Vite SPA with Tailwind CSS and Framer Motion.
 
-## About The Project
-PROPREP-AI is a full-stack web application engineered to assist users in their interview preparation process by providing AI-generated questions and a robust session management system.
+---
 
-The application is built on the MERN stack (MongoDB, Express.js, React, Node.js) and integrates with the Google Gemini API to deliver the following core functionalities:
+## Highlights (Resume-style bullets)
 
-Generation of tailored interview questions based on user inputs.
+- Built a secure REST API with JWT-based auth, password hashing and image uploads (Multer). See server entry points: [server/server.js](server/server.js) and auth logic: [`registerUser`](server/controllers/authController.js), [`loginUser`](server/controllers/authController.js), [`getUserProfile`](server/controllers/authController.js).
+- Integrated Google Generative AI (Gemini) to generate interview questions and concept explanations with prompt templates. See AI integration: [`generateInterviewQuestion`](server/controllers/aiController.js), [`generateConceptExplanation`](server/controllers/aiController.js) and prompts: [server/utils/prompts.js](server/utils/prompts.js).
+- Designed normalized MongoDB schemas and relations: `User`, `Session`, `Question` with population and cascading delete behavior. See models: [server/models/user.js](server/models/user.js), [server/models/session.js](server/models/session.js), [server/models/question.js](server/models/question.js).
+- Implemented session-level Q&A flows: create sessions with generated questions, add more questions, pin/unpin questions and update notes. See controllers: [`createSession`](server/controllers/sessionController.js), [`addQuestionsToSession`](server/controllers/questionController.js), [`togglePinQuestion`](server/controllers/questionController.js), [`updateQuestionNote`](server/controllers/questionController.js).
+- Built a production-friendly React frontend with Context-based auth, Axios instance with interceptors, reusable UI components, code syntax-highlighting and markdown rendering. See client entry: [Client/src/main.jsx](Client/src/main.jsx), context: [`UserProvider`](Client/src/context/UserContext.jsx), axios wrapper: [Client/src/utils/axiosInstance.js](Client/src/utils/axiosInstance.js).
+- Clean, componentized frontend UI using Tailwind CSS, Framer Motion animations and accessible modal/drawer patterns. Example components: [Client/src/components/Modal.jsx](Client/src/components/Modal.jsx), [Client/src/components/Drawer.jsx](Client/src/components/Drawer.jsx), and layout: [Client/src/components/Layouts/DashboardLayout.jsx](Client/src/components/Layouts/DashboardLayout.jsx).
+- Implemented client-side AI UX: question cards, expand/collapse previews, code copy and highlight via React Syntax Highlighter and markdown rendering. See [Client/src/Pages/InterviewPrep/components/AIResponsePreview.jsx](Client/src/Pages/InterviewPrep/components/AIResponsePreview.jsx) and [Client/src/components/Cards/QuestionCard.jsx](Client/src/components/Cards/QuestionCard.jsx).
 
-Creation and management of distinct interview practice sessions.
+---
 
-Tools for tracking performance and recording notes within each session.
+## Architecture Overview
 
-## Technology Stack
-The project is built using a modern technology stack for both the frontend and backend.
+- Backend: Express server with modular controllers, routes and middlewares.
+  - Server bootstrap: [server/server.js](server/server.js)
+  - DB connect: [server/config/db.js](server/config/db.js)
+  - Routes: [server/routes/authRoutes.js](server/routes/authRoutes.js), [server/routes/sessionRoutes.js](server/routes/sessionRoutes.js), [server/routes/questionRoutes.js](server/routes/questionRoutes.js), [server/routes/aiRoutes.js](server/routes/aiRoutes.js)
+  - Controllers: [server/controllers/authController.js](server/controllers/authController.js), [server/controllers/sessionController.js](server/controllers/sessionController.js), [server/controllers/questionController.js](server/controllers/questionController.js), [server/controllers/aiController.js](server/controllers/aiController.js)
+  - Middlewares: [`protect` JWT auth middleware](server/middlewares/authMiddleware.js), [upload middleware (Multer)](server/middlewares/uploadMiddleware.js)
+  - Prompt templates: [server/utils/prompts.js](server/utils/prompts.js)
 
-## Frontend
-React: A component-based JavaScript library for building user interfaces.
-React Router DOM: A library for declarative, client-side routing.
-Tailwind CSS: A utility-first CSS framework for rapid and custom UI development.
-Axios: A promise-based HTTP client for making API requests.
-Framer Motion: A production-ready library for creating fluid animations.
-Lucide React: A lightweight and performant icon toolkit.
-React Syntax Highlighter: A component for styling code blocks with syntax highlighting.
+- Frontend: React (Vite) app with Context, Axios instance and modular pages/components.
+  - App entry: [Client/src/App.jsx](Client/src/App.jsx)
+  - Auth & state: [`UserProvider`](Client/src/context/UserContext.jsx)
+  - API paths: [Client/src/utils/apiPath.js](Client/src/utils/apiPath.js)
+  - Reusable utils: [Client/src/utils/axiosInstance.js](Client/src/utils/axiosInstance.js), [Client/src/utils/uploadImage.js](Client/src/utils/uploadImage.js)
+  - Pages: Landing ([Client/src/Pages/LandingPage.jsx](Client/src/Pages/LandingPage.jsx)), Dashboard ([Client/src/Pages/Home/Dashboard.jsx](Client/src/Pages/Home/Dashboard.jsx)), Interview prep ([Client/src/Pages/InterviewPrep/InterviewPrep.jsx](Client/src/Pages/InterviewPrep/InterviewPrep.jsx)), Auth pages ([Client/src/Pages/Auth/Login.jsx](Client/src/Pages/Auth/Login.jsx), [Client/src/Pages/Auth/Signup.jsx](Client/src/Pages/Auth/Signup.jsx)).
 
-## Backend
-- Node.js: A JavaScript runtime environment for executing server-side code.
-- Express.js: A minimal and flexible web application framework for Node.js.
-- MongoDB: A NoSQL document database for data storage.
-- Mongoose: An Object Data Modeling (ODM) library for MongoDB and Node.js.
-- JSON Web Token (JWT): A standard for creating access tokens for secure authentication.
-- Bcrypt.js: A library for hashing user passwords.
-- Google Generative AI SDK: The official SDK for interacting with the Gemini AI model.
-- Multer: A middleware for handling multipart/form-data, used for file uploads.
-- Dotenv: A module for loading environment variables from a .env file.
+---
 
-## Project Structure
-The repository is organized into a standard client-server architecture.
-Client Directory
-/client
-└── src
-    ├── assets/
-    ├── components/
-    ├── Context/
-    ├── Pages/
-    ├── Utils/
-    ├── App.jsx
-    └── main.jsx
-Server Directory
-/server
-├── controllers/
-├── middleware/
-├── models/
-├── routes/
-├── uploads/
-├── db.js
-└── server.js
+## Core Features (What it does)
 
-## Getting Started
-- Follow these instructions to set up and run the project on your local machine.
+- Auth: register/login with hashed passwords + JWT token generation via [`generateToken`](server/controllers/authController.js) and protected endpoints via [`protect`](server/middlewares/authMiddleware.js).
+- AI question generation: call to Google GenAI SDK in [`generateInterviewQuestion`](server/controllers/aiController.js) using prompts in [server/utils/prompts.js](server/utils/prompts.js).
+- Session lifecycle: create a session with AI-generated Q&A ([`createSession`](server/controllers/sessionController.js)), list user sessions ([`getMySessions`](server/controllers/sessionController.js)), view session details and associated questions ([`getSessionById`](server/controllers/sessionController.js)), delete session with cascade delete on questions ([`deleteSession`](server/controllers/sessionController.js)).
+- Question management: add generated questions to existing sessions ([`addQuestionsToSession`](server/controllers/questionController.js)), pin/unpin and update personal notes on questions.
+- Profile image upload: client posts multipart/form-data to route in [server/routes/authRoutes.js](server/routes/authRoutes.js), file handling in [server/middlewares/uploadMiddleware.js](server/middlewares/uploadMiddleware.js), static serve via `app.use('/uploads', express.static(...))` in [server/server.js](server/server.js).
+- Frontend UX: markdown + syntax-highlighted answers ([Client/src/Pages/InterviewPrep/components/AIResponsePreview.jsx](Client/src/Pages/InterviewPrep/components/AIResponsePreview.jsx)), reusable session cards and drawer for detailed explanations.
 
-## Prerequisites
-Ensure you have the following software installed:
+---
 
-Node.js (LTS version recommended, preferably managed via nvm)
+## Tech Stack (Resume-ready terminology)
 
-npm (Node Package Manager)
+- Backend: Node.js, Express.js, MongoDB, Mongoose, JWT (jsonwebtoken), bcryptjs, Multer
+  - Google Generative AI SDK: `@google/genai` (Gemini model usage) — integrated in [server/controllers/aiController.js](server/controllers/aiController.js)
+- Frontend: React (17+ / React 19 in package.json), Vite, Tailwind CSS, Framer Motion, React Router, Axios
+- Features & tools: React Context API, Axios interceptors ([Client/src/utils/axiosInstance.js](Client/src/utils/axiosInstance.js)), Markdown rendering + syntax highlighting, responsive components
+- Dev & infra: nodemon (dev), dotenv for env vars, CORS handling
 
-MongoDB (a local instance or a cloud-based service like MongoDB Atlas)
+---
 
-Server Installation
-Clone the repository:
+## Environment Variables
 
-Bash
+Create a `.env` in `/server` with (as used in code):
+- `MONGO_URI` — MongoDB connection string ([used in server/config/db.js](server/config/db.js))
+- `JWT_SECRET` — secret for signing JWTs ([used in server/middlewares/authMiddleware.js](server/middlewares/authMiddleware.js) & [`generateToken`](server/controllers/authController.js))
+- `GOOGLE_API_KEY` — API key for Google GenAI (`@google/genai`) used in [server/controllers/aiController.js](server/controllers/aiController.js)
+- `PORT` — optional server port (default in [server/server.js](server/server.js))
 
-git clone https://github.com/your-username/proprep-ai.git
-Navigate to the server directory:
+Note: earlier docs reference `GEMINI_API_KEY` — the code expects `GOOGLE_API_KEY`.
 
-Bash
+---
 
-cd proprep-ai/server
-Install dependencies:
+## Quick Start
 
-Bash
+1. Server
+   - cd into server: `cd server`
+   - install: `npm install`
+   - create `.env` with variables above
+   - run (dev): `npm run dev` (uses `nodemon`; entry [server/server.js](server/server.js))
 
-npm install
-Configure environment variables: Create a .env file in the /server root and add the following required variables:
+2. Client
+   - cd into client: `cd Client`
+   - install: `npm install`
+   - run: `npm run dev` (Vite; entry [Client/src/main.jsx](Client/src/main.jsx))
 
-Code snippet
+3. Open the app
+   - Frontend default: Vite will provide a local port (e.g., `localhost:5173`) — API base is set in [Client/src/utils/apiPath.js](Client/src/utils/apiPath.js) as `BASE_URL = "http://localhost:8000"`; ensure the server port and `BASE_URL` match or update `BASE_URL` to the server host/port.
 
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_generated_jwt_secret
-GEMINI_API_KEY=your_google_gemini_api_key
-PORT=5000
-Start the server:
+---
 
-Bash
+## Important Files & Symbols (navigate quickly)
 
-npm run dev
-Client Installation
-Navigate to the client directory:
+- Server entry: [server/server.js](server/server.js)
+- DB connect: [server/config/db.js](server/config/db.js)
+- Auth routes & handlers:
+  - Routes: [server/routes/authRoutes.js](server/routes/authRoutes.js)
+  - Handlers: [`registerUser`](server/controllers/authController.js), [`loginUser`](server/controllers/authController.js), [`getUserProfile`](server/controllers/authController.js)
+- AI:
+  - Routes: [server/routes/aiRoutes.js](server/routes/aiRoutes.js)
+  - Handlers: [`generateInterviewQuestion`](server/controllers/aiController.js), [`generateConceptExplanation`](server/controllers/aiController.js)
+  - Prompts: [server/utils/prompts.js](server/utils/prompts.js)
+- Session & question management:
+  - Routes: [server/routes/sessionRoutes.js](server/routes/sessionRoutes.js), [server/routes/questionRoutes.js](server/routes/questionRoutes.js)
+  - Controllers: [`createSession`](server/controllers/sessionController.js), [`getMySessions`](server/controllers/sessionController.js), [`getSessionById`](server/controllers/sessionController.js), [`deleteSession`](server/controllers/sessionController.js), [`addQuestionsToSession`](server/controllers/questionController.js), [`togglePinQuestion`](server/controllers/questionController.js), [`updateQuestionNote`](server/controllers/questionController.js)
+- Models:
+  - [server/models/user.js](server/models/user.js)
+  - [server/models/session.js](server/models/session.js)
+  - [server/models/question.js](server/models/question.js)
+- Frontend:
+  - App root: [Client/src/App.jsx](Client/src/App.jsx)
+  - Auth context: [`UserProvider`](Client/src/context/UserContext.jsx)
+  - Axios wrapper: [Client/src/utils/axiosInstance.js](Client/src/utils/axiosInstance.js)
+  - API endpoints path map: [Client/src/utils/apiPath.js](Client/src/utils/apiPath.js)
+  - Key pages: [Client/src/Pages/Home/Dashboard.jsx](Client/src/Pages/Home/Dashboard.jsx), [Client/src/Pages/InterviewPrep/InterviewPrep.jsx](Client/src/Pages/InterviewPrep/InterviewPrep.jsx), [Client/src/Pages/LandingPage.jsx](Client/src/Pages/LandingPage.jsx)
+  - Key UI components: [Client/src/components/Modal.jsx](Client/src/components/Modal.jsx), [Client/src/components/Drawer.jsx](Client/src/components/Drawer.jsx), [Client/src/components/Cards/QuestionCard.jsx](Client/src/components/Cards/QuestionCard.jsx), [Client/src/Pages/InterviewPrep/components/AIResponsePreview.jsx](Client/src/Pages/InterviewPrep/components/AIResponsePreview.jsx)
 
-Bash
+---
 
-cd ../client
-Install dependencies:
+## Notes & Suggested Resume Phrases
 
-Bash
+- "Designed and implemented a full-stack MERN application that integrates Google Gemini for dynamic content generation and stores session-based Q&A with MongoDB relations."
+- "Built secure authentication with JWT, password hashing (bcrypt), and protected Express routes; implemented media upload pipeline using Multer and served static assets."
+- "Implemented frontend state management using React Context, global axios interceptors, markdown rendering and performant UI using TailwindCSS and Framer Motion."
+- "Authored prompt templates and logic for safe parsing of model responses and integrated Google GenAI SDK."
 
-npm install
-Start the client application:
+---
 
-Bash
+## Next Improvements (optional)
 
-npm run dev
-Core Features
-User Authentication: Secure user registration and login functionality implemented with JWT for stateless authentication.
+- Add server-side validation (e.g., Joi) and request schema validation.
+- Add unit & integration tests (Jest / Supertest).
+- Harden AI response parsing with safer sanitization and fallback flows.
+- Centralize environment config and Dockerize both services for parity in dev/prod.
 
-AI Question Generation: Dynamic generation of interview questions using the Google Gemini API, tailored to user-specified criteria.
+---
 
-Session Management: Full CRUD (Create, Read, Update, Delete) capabilities for managing interview practice sessions.
-
-Interactive Q&A Interface: Users can add generated questions to sessions, pin important items, and append personal notes for review.
-
-Profile Management: Functionality for users to view and update their profile information, including a profile photo upload feature.
-
-API Testing Guide
-For testing protected API endpoints, a valid JWT must be included in the request header. The following script can be used in Postman to automate this process:
-
-After a successful login request, navigate to the Tests tab.
-
-Add the following script to automatically store the authentication token as a collection variable:
-
-JavaScript
-
-pm.collectionVariables.set("accessToken", pm.response.json().token);
-For subsequent requests to protected routes, set the authorization type to Bearer Token and use {{accessToken}} as the token value.
+If you want, I can:
+- produce a cleaned README.md file (ready-to-save) with the content above,
+- or generate a one-page bullet summary tailored to a CV using exact tech keywords.

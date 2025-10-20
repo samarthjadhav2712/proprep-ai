@@ -6,7 +6,7 @@ const questionsAnswerPrompt = (role, experience, topicsToFocus, numberOfQuestion
     - Candidate Experience Level : ${experience} years
     - Topics to Focus On : ${topicsToFocus}
     - Write ${numberOfQuestions} interview questions . 
-    - for each question , generate a small 1-2 lines beginner-friendly answer.
+    - for each question , generate beginner-friendly answer.
     - If the answer needs a code example , add a small code block inside . 
     - Keep formatting very clean.
     - Return a pure JSON array like : 

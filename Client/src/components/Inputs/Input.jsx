@@ -51,7 +51,7 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
     return (
         <div className="flex flex-col gap-1">
             <label className='text-sm font-medium text-slate-700'>{label}</label>
-            <div className='flex items-center bg-white border border-slate-200 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-amber-400 transition-all duration-300'>
+            <div className='flex items-center bg-white border border-slate-200 rounded-lg px-3 py-2 focus-within:ring-2 focus-within:ring-blue-400 transition-all duration-300'>
                 <input 
                     type={type === "password" ? (showPassword ? "text" : "password") : type}
                     placeholder={placeholder}
@@ -62,7 +62,7 @@ const Input = ({ value, onChange, label, placeholder, type }) => {
                 {type === "password" && (
                     <button type="button" onClick={toggleShowPassword} className="ml-2 flex-shrink-0">
                         {showPassword ? (
-                            <EyeIcon className="text-amber-600" />
+                            <EyeIcon className="text-black-600" />
                         ) : (
                             <EyeSlashIcon className="text-slate-400" />
                         )}
