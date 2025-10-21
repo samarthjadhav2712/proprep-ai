@@ -22,7 +22,6 @@ const DashboardPreview = () => {
     const sidebarLinks = [
         { name: 'Dashboard', icon: <LayoutGrid size={18} />, active: false },
         { name: 'My Sessions', icon: <List size={18} />, active: true },
-        { name: 'Pinned Q&A', icon: <Pin size={18} />, active: false },
     ];
 
     const containerVariants = {
@@ -57,9 +56,6 @@ const DashboardPreview = () => {
                         </a>
                     ))}
                 </nav>
-                <div className="mt-auto p-3 bg-slate-50 rounded-lg text-center text-xs text-slate-500">
-                    Upgrade to Pro for unlimited sessions.
-                </div>
             </aside>
 
             {/* --- Main Content Area --- */}
@@ -70,7 +66,6 @@ const DashboardPreview = () => {
                         <input type="text" placeholder="Search sessions..." className="w-full pl-10 pr-4 py-1.5 text-sm bg-slate-100 rounded-md border-transparent focus:ring-2 focus:ring-blue-500" />
                     </div>
                     <div className="flex items-center gap-4">
-                        <Bell size={20} className="text-slate-500" />
                         <div className="w-8 h-8 rounded-full bg-gradient-to-br from-sky-500 to-blue-500 text-white flex items-center justify-center font-bold text-sm">
                             JD
                         </div>
