@@ -32,6 +32,10 @@ app.use("/api/ai/",aiRoutes);
 // serve static files from the "uploads" directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+app.get("/", (req, res) => {
+    res.send("API Server is running successfully!");
+});
+
 // static server
 const PORT = process.env.PORT || 5000;
 
