@@ -17,6 +17,3 @@ Tech stack
 Quick start (overview)
 1. Server: cd server → npm install → create .env (MONGO_URI, JWT_SECRET, GOOGLE_API_KEY) → npm run dev  
 2. Client: cd Client → npm install → npm run dev
-
-License: MIT
-```// filepath: c:\Users\Sanklp\Desktop\ProPrep-AI\README.md
