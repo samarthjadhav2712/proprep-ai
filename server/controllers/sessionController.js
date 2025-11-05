@@ -1,5 +1,5 @@
-const Session = require("../models/Session");
-const Question = require("../models/Question");
+const Session = require("../models/session");
+const Question = require("../models/question");
 
 // @desc    Create a new session & link questions
 // @route   POST /api/sessions/create
